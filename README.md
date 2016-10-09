@@ -1,2 +1,2 @@
 # ggpl
-My ggpl course repository
+My ggpl course repository.
