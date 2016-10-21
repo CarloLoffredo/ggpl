@@ -88,16 +88,18 @@ def ggpl_bone_structure(file_name):
 	
 	listFrames.pop()
 
+
+	for i in range(0,len(listFrames)):
+		for j in range(0,len(listFrames[i])):
+			for n in range(0,len(listFrames[i][j])):
+				listFrames[i][j][n] = float(listFrames[i][j][n])
+
 	#for i in range(0,len(listFrames)):
 	#	print listFrames[i]
 	
-	#scene = frame(listFrames[0][1][0],listFrames[0][1][1],listFrames[0][1][2],listFrames[0][1][3],listFrames[0][3],listFrames[0][2])
-	cubo = CUBOID([1,1,1])
-	scene = STRUCT([CUBOID([1,1,1])])
+	scene = frame(listFrames[0][1][0],listFrames[0][1][1],listFrames[0][1][2],listFrames[0][1][3],listFrames[0][3],listFrames[0][2])
 
-	for frame in listFrames:
-		scene = STRUCT([scene,T(1)(frame[0][0]),cubo])
-	
+
 	return scene
 
 VIEW(ggpl_bone_structure("frame_data_000000.csv"))
