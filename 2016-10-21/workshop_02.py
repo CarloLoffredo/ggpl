@@ -167,4 +167,4 @@ def ggpl_bone_structure(file_name):
 	#return scene
 	return scene
 
-VIEW(ggpl_bone_structure("frame_data_000000.csv"))
+VIEW(ggpl_bone_structure("frame_data_000001.csv"))
