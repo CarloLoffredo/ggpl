@@ -1,46 +1,56 @@
 from pyplasm import *
 
 def ggpl_doubleRunStair(dx, dy, dz):
+	""" 
+	Creates a double run stair in a box defined by the parameters.
 	
-	numRaiser = dz/0.18
+	@param dx: the x dimension of the box
+	@param dy: the y dimension of the box
+	@param dz: the z dimension of the box
+	@return: the HPC object of the whole structure
+	"""
+	voidRiserHeight = 0.08
+	
+	
+	numRiser = dz/0.18
 	
 	xPlatform = min(0.31*dx,2)
 	yPlatform = dy
 	zPlatform = 0.18
 	
-	xRaiser = (0.69*dx)/(numRaiser/2)
-	yRaiser = dy/2.0 - 0.10
-	zRaiser = 0.18
+	xRiser = (0.69*dx)/(numRiser/2)
+	yRiser = dy/2.0 - 0.10
+	zRiser = 0.18
 	
-	basePlatform = CUBOID([xPlatform,yPlatform,zPlatform-0.12])
-	baseRaiser = CUBOID([xRaiser,yRaiser,zRaiser-0.12])
+	basePlatform = CUBOID([xPlatform,yPlatform,zPlatform-voidRiserHeight])
+	baseRiser = CUBOID([xRiser,yRiser,zRiser-voidRiserHeight])
 	
 	height = 0
 	xCoord = 0
 	scene = STRUCT([CUBOID([0.01,0.01])])
 	
-	# placing the first run of raisers
-	for n in range(0,int(numRaiser/2)):
-		scene = STRUCT([scene,T([1,3])([xCoord,height]),baseRaiser])
-		xCoord = xCoord + xRaiser
-		height = height + zRaiser
+	# placing the first run of risers
+	for n in range(0,int(numRiser/2)):
+		scene = STRUCT([scene,T([1,3])([xCoord,height]),baseRiser])
+		xCoord = xCoord + xRiser
+		height = height + zRiser
 	
 	# placing the platform
 	scene = STRUCT([scene,T([1,3])([xCoord,height]),basePlatform])
 	
-	# placing the second run of raisers
-	height = height + zRaiser
-	xCoord = xCoord - xRaiser
-	for n in range(0,int(numRaiser/2)):
-		scene = STRUCT([scene,T([1,2,3])([xCoord,dy/2.0 + 0.10,height]),baseRaiser])
-		xCoord = xCoord - xRaiser
-		height = height + zRaiser
+	# placing the second run of risers
+	height = height + zRiser
+	xCoord = xCoord - xRiser
+	for n in range(0,int(numRiser/2)):
+		scene = STRUCT([scene,T([1,2,3])([xCoord,dy/2.0 + 0.10,height]),baseRiser])
+		xCoord = xCoord - xRiser
+		height = height + zRiser
 	
-	# raising the raisers and the platform to the correct height
-	scene = T([3])(0.12)(scene)
+	# raising the risers and the platform to the correct height
+	scene = T([3])(voidRiserHeight)(scene)
 	
 	# placing the supporting wall
-	suppWall = CUBOID([0.69*dx - (xRaiser/2),0.20,dz + 0.06])
+	suppWall = CUBOID([(int(numRiser/2))*xRiser,0.20,height])
 	scene = STRUCT([scene,T(2)(dy/2.0 - 0.10),suppWall])
 	
 	
@@ -55,4 +65,4 @@ def ggpl_doubleRunStair(dx, dy, dz):
 	
 	return scene
 
-VIEW(ggpl_doubleRunStair(3,3,3))
+VIEW(ggpl_doubleRunStair(4,3,4))
