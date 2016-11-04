@@ -9,9 +9,7 @@ def ggpl_doubleRunStair(dx, dy, dz):
 	@param dz: the z dimension of the box
 	@return: the HPC object of the whole structure
 	"""
-	voidRiserHeight = 0.08
-	
-	
+	voidRiserHeight = 0.08	
 	numRiser = dz/0.18
 	
 	xPlatform = min(0.31*dx,2)
