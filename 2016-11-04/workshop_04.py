@@ -21,14 +21,20 @@ def ggpl_flat_top_roof(vertices,cells):
 	xRaftDist = x/xRaftNum
 	yRaftDist = y/yRaftNum
 	
+	# "south" rafters
 	xPos = 0
 	for n in range(0,int(xRaftNum)+1):
-		rafter = MKPOL([ [[xPos,0,0],[xPos,vertices[7][1],3]] , [[1,2]] , [] ])
+		rafter = MKPOL([ [[xPos,0,0],[xPos,min(vertices[7][1], (xPos/vertices[7][0])*vertices[7][1], ((xPos-vertices[6][0])/(x-vertices[6][0]))*(-vertices[6][1]) + vertices[6][1]),min(vertices[7][2],(xPos/vertices[7][0])*vertices[7][1], ((xPos-vertices[6][0])/(x-vertices[6][0]))*(-vertices[6][2]) + vertices[6][2])]] , [[1,2]] , [] ])
 		skelRoof = STRUCT([skelRoof,rafter])
 		xPos = xPos + xRaftDist
+
+	"""
+	Building the rafters for all four faces is going to be quite long and tedious.
+	I need to find another method to build them more efficiently.
+	"""
 	
 	# generate the roof frame using OFFSET() 
-	frameRoof = OFFSET([0.3,0.3,0.3])(skelRoof)
+	frameRoof = OFFSET([0.2,0.2,0.2])(skelRoof)
 	
 	return frameRoof
 
