@@ -8,7 +8,7 @@ line = []
 A = []
 B = []
 
-f = open('wireframe.lines', 'rt')
+f = open('theFinal.lines', 'rt')
 try:
     reader = csv.reader(f)
     for row in reader:
